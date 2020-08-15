@@ -1,0 +1,185 @@
+#include<iostream>
+using namespace std;
+
+class node
+{
+	public:
+		int info;
+		node *ptr;
+		void insert_middle(int n, int x);
+		void insert_end(int n);
+		void insert_beg(int n);
+		void delete_middle(int x);
+		void delete_end();
+		void delete_beg();
+		void reverse();
+		void print();
+		node();
+}*head, *start, *last, *temp, *temp1;
+
+node::node()
+{
+	start = NULL;
+}
+
+void node::insert_end(int n)
+{
+	head = new node;
+	head->ptr = NULL;
+	if(start == NULL)
+	{
+		start = temp = head;
+		start->info = n;
+		start->ptr = NULL;
+		last = start;
+	}
+	else
+	{
+		head->info = n;
+		head->ptr = NULL;
+		temp->ptr = head;
+		temp = head;
+		last = head;
+	}
+}
+
+void insert_middle(int n, int x)
+{
+	temp = new node;
+	temp->info = n;
+	temp1 = start;
+	for(int i =1; i<x; ++i)
+		temp1 = temp1->ptr;
+	temp->ptr = temp1->ptr;
+	temp1->ptr = temp;
+}
+
+void node::insert_beg(int n)
+{
+	temp = new node;
+	temp->info = n;
+	temp->ptr = start;
+	start = temp;
+}
+
+void node::delete_end()
+{
+	temp = start;
+	while(temp->ptr->ptr != NULL)
+		temp = temp->ptr;
+	last = head = temp;
+	delete (temp->ptr);
+	temp->ptr = NULL;
+}
+
+void node::delete_beg()
+{
+	temp = start;
+	start = start->ptr;
+	delete temp;
+}
+
+void node::delete_middle(int x)
+{
+	temp1 = temp = start;
+	for(int i = 1; i<x; ++i)
+		temp1 = temp1->ptr;
+	temp = temp1->ptr;
+	temp1->ptr = temp->ptr;
+	delete temp;
+}
+
+void node::reverse()
+{
+	temp = start;
+	head = temp1 = NULL;
+	do
+	{
+		temp1 = temp->ptr;
+		temp->ptr = head;
+		head = temp;
+		temp = temp1;
+	}while(temp != NULL);
+	last = start;
+	start = head;
+}
+
+void node::print()
+{
+	cout<<"\nThe list is:\n";
+	temp = start;
+	do
+	{
+		cout<<temp->info<<"->";
+		temp = temp->ptr;
+	}while(temp->ptr == NULL);
+}
+
+int main
+{
+	node t;
+	int a, n;
+	lb:
+	system("cls");
+	cout<<"MENU";
+	cout<<"\n1.Insert_end node"
+		<<"\n2.Insert_beg node"
+		<<"\n3.Insert_middle node"
+		<<"\n4.Delete_middle node"
+		<<"\n5.Delete_end node"
+		<<"\n6.Delete_beg node"
+		<<"\n7.Reverse the list"
+		<<"\n8.Print"
+		<<"\nEnter your choice:";
+	cin>>a;
+	switch(a)
+	{
+		case 1 : 
+			cout<<"\nEnter the no. to be entered in a node:";
+			cin>>n;
+			t.insert_end(n);
+			t.print();
+			break;
+		case 2 :
+			cout<<"\nEnter the no. to be entered in a node:";
+			cin>>n;
+			t.insert_beg(n);
+			t.print();
+			break;
+		case 3 : 
+			int pos;
+			cout<<"\nEnter the no. to be entered in a node:";
+			cin>>n;
+			cout<<"Enter the position:";
+			cin>>pos;
+			t.insert_middle(n);
+			t.print();
+			break;
+		case 4 :
+			cout<<"\nEnter the node to be deleted:";
+			cin>>n;
+			t.delete_middle(n);
+			t.print();
+			break;
+		case 5 :
+			t.delete_end();
+			t.print();
+			break;
+		case 6 :
+			t.delete_beg();
+			t.print();
+			break;
+		case 7 :
+			t.reverse();
+			t.print();
+			break;
+		case 8 :
+			t.print();
+			break;	
+	}
+	cout<<"\nAgain?(1 for yes, 0 for no):";
+	cin>>a;
+	if(a == 1)
+		goto lb;
+	return 0;
+}
