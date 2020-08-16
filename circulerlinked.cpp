@@ -97,7 +97,7 @@ void node::print()
 	}while(temp != last->next);
 }
 
-int main
+int main()
 {
 	node x;
 	int a, n;
